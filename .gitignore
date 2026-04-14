@@ -14,6 +14,9 @@ _index.md
 rules.md
 false-beliefs.md
 
+# Claude Code 本地权限缓存（含 API token，严禁上传）
+.claude/settings.local.json
+
 # Obsidian 本地配置
 .obsidian/
 
