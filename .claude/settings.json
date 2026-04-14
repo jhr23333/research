@@ -1,0 +1,34 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/d/anaconda3/python.exe D:/research/scripts/hooks/sync-index.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/d/anaconda3/python.exe D:/research/scripts/hooks/sync-index.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/d/anaconda3/python.exe D:/research/scripts/hooks/clippings-check.py"
+          }
+        ]
+      }
+    ]
+  }
+}

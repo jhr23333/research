@@ -1,0 +1,23 @@
+# 研究内容（不备份，属于个人投研数据）
+01_公司/
+02_产业链节点/
+03_主题/
+04_原始资料/
+99_模板/
+Clippings/
+inbox/
+
+# 自动生成文件
+_index.md
+
+# 个人研究积累（与工作流配置无关）
+rules.md
+false-beliefs.md
+
+# Obsidian 本地配置
+.obsidian/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
