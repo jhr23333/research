@@ -40,7 +40,7 @@ def parse_company(company_dir):
         "pending_questions": 0,
     }
 
-    # ticker 从 基本面.md 读（支持 code: 688521 或 ticker: 688521.SH 两种格式）
+    # ticker 从 基本面.md 读（支持 code: 000001 或 ticker: 000001.SZ 两种格式）
     basic = read_file(os.path.join(company_dir, "基本面.md"))
     ticker_m = re.search(r"(?:ticker|code)[:\s]+(\d{6}(?:\.[A-Z]{2})?)", basic, re.IGNORECASE)
     if ticker_m:

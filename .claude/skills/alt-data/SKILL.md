@@ -13,8 +13,7 @@ description: 另类数据拉取与信号检查。读取 05_另类数据/README.m
 ## 触发方式
 
 - `/alt-data` — 拉取所有已登记数据源，检查全部信号
-- `/alt-data 鹏鼎` — 只拉与鹏鼎相关的数据源
-- `/alt-data 芯原` — 只拉与芯原相关的数据源
+- `/alt-data {公司名}` — 只拉与该公司相关的数据源（公司名需与 README.md 登记表一致）
 
 ---
 
@@ -36,12 +35,14 @@ description: 另类数据拉取与信号检查。读取 05_另类数据/README.m
 取数完成后整理为：
 
 ```
-| 指标 | 最新值 | 上月值 | 同比 | 环比 |
+| 指标 | 最新值 | 上月值 | 同比(YoY) | 环比(MoM) |
 ```
+
+> ⚠️ 注意：台湾PCB月营收的**信号判断必须用同比(YoY)**，环比受春节等季节性干扰不可用；其他指标同比/环比均可参考。
 
 ### Step 2b：调用 iFind search_notice 拉取资本开支公告
 
-读取 `scripts/capex_tracker.py` 中的 `CAPEX_WATCHLIST`，对每家公司调用 **`search_notice`**：
+读取 `05_另类数据/scripts/capex_tracker.py` 中的 `CAPEX_WATCHLIST`，对每家公司调用 **`search_notice`**：
 - `time_start`：90天前
 - `size`：5
 - `query`：`{公司名} {signal关键词}`
