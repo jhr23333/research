@@ -17,6 +17,7 @@
 - **/cross-check**（项目skill）：纪要交叉验证，检查历史待跟进问题是否已回答、陈述是否出现矛盾
 - **search.py**：全文搜索工具，`/d/anaconda3/python.exe D:/research/scripts/search.py "关键词"`
 - **iFind EDB**：宏观高频数据（韩国半导体出口前10/20日、台湾PCB月营收等），用 `search_edb` 查指标名，`get_edb_data` 取数
+- **/alt-data**（项目skill）：拉取 05_另类数据 登记的 iFind EDB 指标，检查信号阈值，触发时自动写入假设.md
 
 ## 目录结构
 
