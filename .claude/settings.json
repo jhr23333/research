@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/d/anaconda3/python.exe D:/research/scripts/hooks/sync-index.py"
+            "command": "bash D:/research/scripts/hooks/sync-index-guard.sh"
           }
         ]
       },
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/d/anaconda3/python.exe D:/research/scripts/hooks/sync-index.py"
+            "command": "bash D:/research/scripts/hooks/sync-index-guard.sh"
           }
         ]
       }
