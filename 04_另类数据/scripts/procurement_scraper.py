@@ -8,7 +8,7 @@
     python procurement_scraper.py --kw "光刻机"  # 自定义关键词
 
 输出：
-    05_另类数据/data/procurement.csv     — 追加写入，去重
+    04_另类数据/data/procurement.csv     — 追加写入，去重
     05_另起数据/看板/招标追踪.md         — 最新摘要，覆盖写入
 """
 
@@ -188,7 +188,7 @@ def write_kanban(items: list[dict], days: int):
         f"> 新增公告：{len(items)} 条（高相关 {len(high)} / 中 {len(mid)} / 低 {len(low)}）",
         "",
         "## 关联公司映射",
-        "<!-- 按 05_另类数据/README.md 中登记的覆盖公司填写 -->",
+        "<!-- 按 04_另类数据/README.md 中登记的覆盖公司填写 -->",
         "",
     ]
 
@@ -216,9 +216,9 @@ def write_kanban(items: list[dict], days: int):
         "## 信号判断指引",
         "- 同一采购方短期内多条采购 → 扩产信号",
         "- 出现新采购方（非常规企业）→ 新建产线信号",
-        "- PCB/基板设备采购量增加 → 潜在利好，参考 05_另类数据/README.md 中的假设映射",
+        "- PCB/基板设备采购量增加 → 潜在利好，参考 04_另类数据/README.md 中的假设映射",
         "",
-        f"[[05_另类数据]]",
+        f"[[04_另类数据]]",
     ]
 
     with open(MD_PATH, "w", encoding="utf-8") as f:

@@ -13,8 +13,8 @@
   python capex_tracker.py --days 180   # 拉取近180天
 
 输出：
-  05_另类数据/data/capex_log.csv       — 追加，去重
-  05_另类数据/看板/资本开支追踪.md     — 覆盖写入，Obsidian看板
+  04_另类数据/data/capex_log.csv       — 追加，去重
+  04_另类数据/看板/资本开支追踪.md     — 覆盖写入，Obsidian看板
 """
 
 # ════════════════════════════════════════════

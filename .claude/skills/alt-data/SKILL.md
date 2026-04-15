@@ -1,11 +1,11 @@
 ---
 name: alt-data
-description: 另类数据拉取与信号检查。读取 05_另类数据/README.md 中登记的数据源，调用 iFind EDB + search_notice 获取最新数据，对比信号阈值；**仅负向/异常信号**自动追加到对应公司假设.md，正向趋势只记录在看板。触发词：/alt-data、拉另类数据、检查信号、更新高频数据。
+description: 另类数据拉取与信号检查。读取 04_另类数据/README.md 中登记的数据源，调用 iFind EDB + search_notice 获取最新数据，对比信号阈值；**仅负向/异常信号**自动追加到对应公司假设.md，正向趋势只记录在看板。触发词：/alt-data、拉另类数据、检查信号、更新高频数据。
 ---
 
 # Alt-Data 另类数据工作流
 
-数据源登记表：`D:\research\05_另类数据\README.md`
+数据源登记表：`D:\research\04_另类数据\README.md`
 研究库根目录：`D:\research\`
 
 ---
@@ -21,7 +21,7 @@ description: 另类数据拉取与信号检查。读取 05_另类数据/README.m
 
 ### Step 1：读取数据源登记表
 
-读取 `05_另类数据/README.md`，从表格 A（iFind EDB）中提取：
+读取 `04_另类数据/README.md`，从表格 A（iFind EDB）中提取：
 - 指标名称
 - 关联公司
 - 关联假设编号（H#）
@@ -42,7 +42,7 @@ description: 另类数据拉取与信号检查。读取 05_另类数据/README.m
 
 ### Step 2b：调用 iFind search_notice 拉取资本开支公告
 
-读取 `05_另类数据/scripts/capex_tracker.py` 中的 `CAPEX_WATCHLIST`，对每家公司调用 **`search_notice`**：
+读取 `04_另类数据/scripts/capex_tracker.py` 中的 `CAPEX_WATCHLIST`，对每家公司调用 **`search_notice`**：
 - `time_start`：90天前
 - `size`：5
 - `query`：`{公司名} {signal关键词}`
@@ -51,7 +51,7 @@ description: 另类数据拉取与信号检查。读取 05_另类数据/README.m
 
 ### Step 3：信号检查
 
-对照 `05_另类数据/README.md` 的信号规则表（**只含负向/异常条件**），逐条判断是否触发：
+对照 `04_另类数据/README.md` 的信号规则表（**只含负向/异常条件**），逐条判断是否触发：
 
 - ✅ 未触发（含正向数据）：正常，记录数值，不写入假设.md
 - ⚠️ **触发（负向/异常）**：标记，进入 Step 4
