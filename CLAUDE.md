@@ -18,11 +18,12 @@
 - **search.py**：全文搜索工具，`/d/anaconda3/python.exe D:/research/scripts/search.py "关键词"`
 - **iFind EDB**：宏观高频数据（韩国半导体出口前10/20日、台湾PCB月营收等），用 `search_edb` 查指标名，`get_edb_data` 取数
 - **/alt-data**（项目skill）：拉取 04_另类数据 登记的 iFind EDB 指标 + search_notice 资本开支公告，检查信号阈值；**仅负向/异常信号**写入假设.md，正向趋势只记录在看板
+- **/model**（项目skill）：财务模型与定价分析——从纪要提取驱动假设、构建三情景P&L、可比公司估值、反推市场隐含假设（What's Priced In）、叠加RSI/MACD技术面信号；模型结果写入 `01_公司/{公司名}/模型.md`
 
 ## 目录结构
 
 ```
-01_公司\          ← 公司研究（memo / 基本面 / 假设 / 纪要 / 研报 / 年报 / 公告）
+01_公司\          ← 公司研究（memo / 基本面 / 假设 / 模型 / 纪要 / 研报 / 年报 / 公告）
 02_产业链节点\    ← 技术、供应商、工艺节点（双向链接）
 03_主题\          ← 跨公司主题研究 + explorations/ + 行业级原始资料
 04_另类数据\      ← 高频另类数据（scripts / data / 看板）
