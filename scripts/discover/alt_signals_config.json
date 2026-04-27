@@ -1,0 +1,34 @@
+[
+  {
+    "signal_name": "日本半导体设备出货额 JSMA",
+    "yoy_threshold": 20,
+    "latest_yoy": null,
+    "iwencai_keyword": "半导体设备",
+    "known_covered_names": ["北方华创", "中微公司"],
+    "note": "由研究员每月运行 /alt-data 后手动更新 latest_yoy；null 表示未跟踪"
+  },
+  {
+    "signal_name": "SIA 全球半导体销售额",
+    "yoy_threshold": 15,
+    "latest_yoy": null,
+    "iwencai_keyword": "半导体",
+    "known_covered_names": ["芯原股份"],
+    "note": "全行业景气指标，阈值设低一点"
+  },
+  {
+    "signal_name": "台湾 PCB 厂商月营收合计",
+    "yoy_threshold": 15,
+    "latest_yoy": null,
+    "iwencai_keyword": "PCB",
+    "known_covered_names": ["鹏鼎控股"],
+    "note": "台系 PCB 景气度代理，YoY 为负时触发负向信号"
+  },
+  {
+    "signal_name": "韩国半导体出口金额",
+    "yoy_threshold": 15,
+    "latest_yoy": null,
+    "iwencai_keyword": "存储芯片",
+    "known_covered_names": [],
+    "note": "DRAM/NAND 景气代理，指向国内存储产业链"
+  }
+]
