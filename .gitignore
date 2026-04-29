@@ -21,6 +21,13 @@ Clippings/*
 inbox/*
 !inbox/.gitkeep
 
+# ── 临时资料暂存口（/quick-memo 一次性消耗，原始资料不入库）──────
+_临时/*
+!_临时/README.md
+
+# ── Claude Code 本地工作树（隔离 agent 用）─────────────────────────
+.claude/worktrees/
+
 # ── 另类数据：脚本保留，配置/数据/看板不上传 ─────────────────────────
 04_另类数据/README.md
 04_另类数据/看板/*

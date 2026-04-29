@@ -17,7 +17,15 @@ description: 跨公司对比分析。读取多家公司的假设.md、基本面.
 询问用户：
 - 对比哪几家公司？
 - 对比重点：竞争格局 / 财务质量 / 估值 / 某一具体业务线
-- 是否需要调取 iFind 最新数据补充？
+- 是否需要调取 iFind 最新数据补充？若需要，按以下分工：
+
+   | 数据 | 工具 | 参数模板 |
+   |---|---|---|
+   | 当日股价/市值/涨跌 | `ifind_helper.quotes_as_dict` | `codes=[{多个代码}], date='{今日}'` |
+   | 财务对比（营收/毛利率/净利率/ROE/PE） | `get_stock_financials` | `ths_code='{代码}', period=['2025Q3','2024Y'], fields=['revenue','gross_profit_margin','net_profit_margin','roe','pe_ttm']`（**逐家调用**） |
+   | PE/PB 估值快照（helper 不覆盖） | `get_stock_performance` | **字段清单只准传**：`pe_ttm, pb, total_mv` |
+
+   > **A股行情一律走 `ifind_helper`**（可一次传多个代码）；**禁止**用 `get_stock_performance` 取股价/涨跌/成交量（NLP 层 bug）。
 
 ### Step 2：读取各公司材料
 对每家公司依次读取：
