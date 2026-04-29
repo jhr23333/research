@@ -41,6 +41,59 @@ for dp, _, fs in os.walk(root):
 
 ### Step 2：转换全部资料为文本（双路径）
 
+#### Step 2.0：长 PDF 必须先做相关性预筛（**强制**）
+
+**触发条件**（满足任一即必须先预筛）：
+- 任一 PDF 页数 > 30 页
+- 整批 PDF 总页数 > 80 页
+- 整批文件数 ≥ 3 份且包含至少一份券商研报（文件名含 `bernstein` / `jefferies` / `hsbc` / `morgan` / `goldman` / `ubs` / `citi` 等）
+
+**为什么强制**：券商研报后 30%-50% 是 disclosures、ratings definitions、各国分发条款等纯噪声；多份长 PDF 全量塞进 context 会浪费大量 token（实测 4 份长研报全量 extract = ~150-200K token，其中可用内容仅 30-40K）。
+
+**预筛流程**：
+
+```bash
+/d/anaconda3/python.exe -c "
+import sys, fitz, os
+sys.stdout.reconfigure(encoding='utf-8')
+files = [r'PATH1', r'PATH2', ...]  # 替换为实际文件列表
+out = r'D:\research\_临时\_preview.md'
+with open(out, 'w', encoding='utf-8') as fp:
+    for f in files:
+        doc = fitz.open(f)
+        n = len(doc)
+        fp.write(f'\n\n# {os.path.basename(f)} ({n} pages)\n')
+        # 首 3 页（标题 / 摘要 / 目录通常在这）
+        for i in range(min(3, n)):
+            fp.write(f'\n## Page {i+1}\n\n')
+            fp.write(doc[i].get_text())
+        # 末 2 页（看正文哪页截止、disclosure 起点）
+        if n > 5:
+            fp.write(f'\n\n## ... (skipped pages 4-{n-2}) ...\n')
+            for i in range(max(3, n-2), n):
+                fp.write(f'\n## Page {i+1}\n\n')
+                fp.write(doc[i].get_text())
+        doc.close()
+print('preview written:', os.path.getsize(out))
+"
+```
+
+**读 `_preview.md` 后必须做的判断**（每份 PDF 单独标注）：
+- **相关性**：与用户当次要求的相关度（高 / 中 / 低 / 跳过）
+- **正文页范围**：disclosure 起点之前的页数（例如"23 页 PDF，正文 p1-p13，p14-p23 全是合规披露"）
+- **重点页**：摘要/结论/关键表格在哪几页（例如"Exhibit 13 在 p11"）
+
+**根据预筛结果决定全量提取范围**：
+- 相关度"低 / 跳过"的 PDF → **不再 extract**，memo 不引用
+- 相关度"高 / 中"的 PDF → 用下面 pymupdf 流程，但**只抽正文页范围**（用 `doc[i] for i in range(start, end)`），跳过 disclosure
+- 多份 PDF 信息高度重叠时（例如同一公司的多家研报） → 选最详细的 1 份全量、其他只抽摘要
+
+**例外（可跳过预筛）**：
+- 全部 PDF < 30 页且总页数 < 80 → 直接走下面的批量 extract
+- 用户明确说"全文都要看"
+
+---
+
 按格式选工具：
 
 | 格式 | 默认工具 | 何时切换 |
@@ -67,22 +120,31 @@ for dp, _, fs in os.walk(root):
 2. **pymupdf 抽完后自检**：某文件出现连续 ≥15 行单字段（单数字 / 1-3 个字 / 单百分比）的密集块 → 该文件切 marker-pdf 重抽，其他文件保留 pymupdf 结果
 3. **memo 生成后用户反馈**："某某表格不对/缺了/数字串了" → 用户手动指定文件重抽
 
-**pymupdf 转换（默认，批量）**：
+**pymupdf 转换（默认，批量；支持页范围）**：
+
+`files` 是 `(path, page_start, page_end)` 三元组列表。`page_start=None, page_end=None` 表示全量；预筛后用具体页号截掉 disclosure。页号 1-based、闭区间（与 `## Page N` 标头一致），便于后续引用。
 
 ```bash
 /d/anaconda3/python.exe -c "
 import sys, fitz, os
 sys.stdout.reconfigure(encoding='utf-8')
-files = [r'PATH1', r'PATH2', ...]  # 替换为实际文件列表
+files = [
+    (r'PATH1', None, None),     # 全量
+    (r'PATH2', 1, 13),          # 只抽 p1-p13（正文，跳过 disclosure）
+    # ...
+]
 out = r'D:\research\_临时\_extracted.md'
 with open(out, 'w', encoding='utf-8') as fp:
-    for f in files:
-        doc = fitz.open(f)
-        fp.write(f'\n\n# {os.path.basename(f)}\n')
-        fp.write(f'> Pages: {len(doc)}\n\n')
-        for i, p in enumerate(doc):
+    for path, ps, pe in files:
+        doc = fitz.open(path)
+        n = len(doc)
+        s = (ps - 1) if ps else 0
+        e = pe if pe else n
+        fp.write(f'\n\n# {os.path.basename(path)}\n')
+        fp.write(f'> Pages extracted: {s+1}-{e} of {n}\n\n')
+        for i in range(s, e):
             fp.write(f'\n## Page {i+1}\n\n')
-            fp.write(p.get_text())
+            fp.write(doc[i].get_text())
         doc.close()
 print('written:', os.path.getsize(out))
 "
