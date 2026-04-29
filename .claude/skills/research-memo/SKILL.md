@@ -34,7 +34,14 @@ Python 路径：`/d/anaconda3/python.exe`（Git Bash 环境）
 **触发**：用户说"新建覆盖XX"或"建立XX覆盖"
 
 1. 创建目录结构：`纪要\`、`研报\`、`年报\`
-2. 用 **iFind stock MCP `get_stock_info`** 获取：股票代码、总市值、行业分类（字段少、不含冗余历史数据）；再用 **`get_stock_financials`** 只取最近2年的营收、毛利率、净利率、ROE、PE——调用时明确指定 `period` 和 `fields` 参数，避免返回全量历史
+2. 调用 iFind 数据（按下表分工，**严禁用 `get_stock_performance` 取 A 股基础行情**，NLP 层 bug）：
+
+   | 数据 | 工具 | 参数模板 |
+   |---|---|---|
+   | 股票代码、总市值、行业分类 | `get_stock_info` | `ths_code={代码}` |
+   | 当日股价/涨跌 | `ifind_helper.quotes_as_dict` | `codes=['{代码}'], date='{今日}'` |
+   | 财务（营收/毛利率/净利率/ROE/PE） | `get_stock_financials` | `ths_code='{代码}', period=['2025Q3','2024Y','2023Y'], fields=['revenue','gross_profit_margin','net_profit_margin','roe','pe_ttm']` |
+
 3. 用 **iFind news MCP `search_news`** 搜索公司名，限定最近30天、最多10条（`search_trending_news` 返回数据量大，优先用 `search_news` 控制条数）
 4. 生成 `基本面.md`（财务数据直接填入，注明来源 [iFind]）
 5. 生成空白 `memo.md`
@@ -222,3 +229,4 @@ rating: 跟踪中
 - 产业链链接用 `[[节点名]]`，节点文件放 `02_产业链节点\`
 - 所有引用标注来源：纪要用 [日期_类型]，iFind数据用 [iFind]，外部新闻用 [来源+日期]
 - iFind MCP 未连接时用 WebSearch 替代，注明来源
+- **A股行情/指数/ETF 价格**一律走 `ifind_helper.quotes_as_dict`（路径 `C:\Users\53271\.ifind\ifind_helper.py`），不用 MCP `get_stock_performance`

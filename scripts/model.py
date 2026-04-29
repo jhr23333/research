@@ -3,7 +3,8 @@
 功能：RSI/MACD/MA 技术指标、情景P&L辅助、implied假设反推
 
 依赖：pandas, numpy（标准数据科学库，已含在 anaconda 中）
-数据来源：iFind MCP（价格数据由 Claude 调用后以 JSON 传入）
+数据来源：iFind（行情走 ifind_helper.quotes_as_dict；技术指标/估值走 iFind MCP get_stock_performance 且字段清单写死）
+        均由 Claude 调用后以 JSON 传入本脚本
 
 使用方式（在 Claude Code 中由 /model skill 驱动）：
   python model.py --mode technical --data prices.json

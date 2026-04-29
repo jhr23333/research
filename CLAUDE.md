@@ -7,7 +7,8 @@
 
 ## 可用工具
 
-- **iFind MCP**：stock / news / edb / fund
+- **iFind MCP**：stock / news / edb / fund（**A 股股价/涨跌/成交量一律走 `ifind_helper`，不走 `get_stock_performance`**；PE/PB/市值/技术指标走 MCP 时必须写死字段清单）
+- **ifind_helper**：`C:\Users\53271\.ifind\ifind_helper.py`，SDK 直连，零 NLP 幻觉，用于 A 股行情/指数/ETF 价格
 - **research-memo**（项目skill）：新建覆盖 / 整理纪要 / 更新memo
 - **/kb-research**（项目skill）：基于知识库深度研究
 - **/reflect**（项目skill）：反方挑战投资假设
@@ -20,6 +21,7 @@
 - **/alt-data**（项目skill）：拉取 04_另类数据 登记的 iFind EDB 指标 + search_notice 资本开支公告，检查信号阈值；**仅负向/异常信号**写入假设.md，正向趋势只记录在看板
 - **/model**（项目skill）：财务模型与定价分析——从纪要提取驱动假设、构建三情景P&L、可比公司估值、反推市场隐含假设（What's Priced In）、叠加RSI/MACD技术面信号；模型结果写入 `01_公司/{公司名}/模型.md`
 - **/discover**（项目skill）：覆盖池外候选发现。串行跑五个维度脚本（基本面催化/估值/覆盖稀疏/产业链溢出/另类数据映射）扫描申万电子一级~479支，自动合并为单一摘要 md；Python 侧完成全部打分与交集计算，LLM 只读 `summary_YYYYMMDD.md`（~3-5K token，27-36s 完成扫描）
+- **/quick-memo**（项目skill）：临时资料库一次性memo。投入 `_临时\` 的 PDF/Word/PPT/Excel/md，按当次具体要求生成 memo 存回 `_临时\`，然后**自动删除全部原始资料**。PDF 用 marker-pdf（保留表格），不进入正式知识库——长期归档请走 `/kb-add`
 
 ## 目录结构
 
@@ -28,6 +30,7 @@
 02_产业链节点\    ← 技术、供应商、工艺节点（双向链接）
 03_主题\          ← 跨公司主题研究 + explorations/ + 行业级原始资料
 04_另类数据\      ← 高频另类数据（scripts / data / 看板）
+_临时\            ← 一次性资料暂存口（/quick-memo 处理后自动清空）
 ```
 
 **04_另类数据 设计原则**：每条数据序列必须关联到具体公司的具体假设（H#），孤立数据不入库。**仅负向/异常信号**自动追加到对应公司的 `假设.md` 待核实问题；正向信号只记录在看板，由研究员手动判断是否追加。
