@@ -2,7 +2,7 @@
 
 **用途**：单次使用资料的暂存口。投入 PDF / Word / PPT / Excel / md / txt，调用 `/quick-memo` 后会：
 
-1. 提取全部文件文本（PDF 用 marker-pdf，保留表格）
+1. 提取全部文件文本（PDF 默认 pymupdf 极速抽取；表格密集研报切 marker-pdf）
 2. 按你当次的"具体要求"生成一份 memo
 3. memo 存为 `_临时\memo_YYYYMMDDHHMM.md`
 4. **删除全部原始资料**（包括子目录），只留 memo 和本 README
