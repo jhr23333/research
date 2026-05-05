@@ -14,7 +14,7 @@
 - **/reflect**（项目skill）：反方挑战投资假设
 - **/kb-add**（项目skill）：PDF/Word/PPT转Markdown并归档知识库；处理Clippings网页剪藏
 - **/compare**（项目skill）：跨公司横向对比，生成差异化分析和相对投资价值判断
-- **/lint**（项目skill）：知识库健康检查，找出僵尸假设、孤岛节点、数据矛盾
+- **/lint**（项目skill）：知识库健康检查，找出僵尸假设、孤岛节点、数据矛盾、skill/目录与文档不一致
 - **/cross-check**（项目skill）：纪要交叉验证，检查历史待跟进问题是否已回答、陈述是否出现矛盾
 - **search.py**：全文搜索工具，`/d/anaconda3/python.exe D:/research/scripts/search.py "关键词"`
 - **iFind EDB**：宏观高频数据（韩国半导体出口前10/20日、台湾PCB月营收等），用 `search_edb` 查指标名，`get_edb_data` 取数

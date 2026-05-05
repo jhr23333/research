@@ -7,6 +7,10 @@
           {
             "type": "command",
             "command": "bash D:/research/scripts/hooks/sync-index-guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash D:/research/scripts/hooks/skill-edit-guard.sh"
           }
         ]
       },
@@ -16,6 +20,10 @@
           {
             "type": "command",
             "command": "bash D:/research/scripts/hooks/sync-index-guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash D:/research/scripts/hooks/skill-edit-guard.sh"
           }
         ]
       }
