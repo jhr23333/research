@@ -135,7 +135,7 @@ def iwencai_query(query: str, domain: str = 'stock') -> dict:
 def get_covered_companies() -> list[dict]:
     """
     解析 _index.md 拿已覆盖公司清单。
-    Returns: [{'name': '芯原股份', 'code': '688521'}, ...]
+    Returns: [{'name': '北方华创', 'code': '002371'}, ...]
     """
     if not INDEX_MD.exists():
         return []

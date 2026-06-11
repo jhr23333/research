@@ -12,16 +12,8 @@
     "yoy_threshold": 15,
     "latest_yoy": null,
     "iwencai_keyword": "半导体",
-    "known_covered_names": ["芯原股份"],
+    "known_covered_names": ["北方华创"],
     "note": "全行业景气指标，阈值设低一点"
-  },
-  {
-    "signal_name": "台湾 PCB 厂商月营收合计",
-    "yoy_threshold": 15,
-    "latest_yoy": null,
-    "iwencai_keyword": "PCB",
-    "known_covered_names": ["鹏鼎控股"],
-    "note": "台系 PCB 景气度代理，YoY 为负时触发负向信号"
   },
   {
     "signal_name": "韩国半导体出口金额",
