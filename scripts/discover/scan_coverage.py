@@ -29,10 +29,10 @@ TOP_N = 10
 
 def fetch_report_counts() -> dict[str, int]:
     """
-    用 iwencai 拿电子板块近 6 个月研报数量。
+    用 iwencai 拿半导体设备板块近 6 个月研报数量。
     Returns: {code: count}
     """
-    q = '申万电子行业 近6个月研究报告数量'
+    q = '半导体设备 近6个月研究报告数量'
     data = iwencai_query(q)
     if not data:
         return {}

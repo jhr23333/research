@@ -50,10 +50,10 @@ def load_active_signals() -> list[dict]:
 
 def query_sector_stocks(keyword: str, pool_codes: dict[str, str]) -> list[tuple[str, str]]:
     """
-    用 iwencai 查该关键词对应的电子股票。
+    用 iwencai 查该关键词对应的半导体设备股票。
     Returns: [(code, name), ...] 且仅限 pool_codes 内的标的
     """
-    q = f'申万电子行业 {keyword} 概念股'
+    q = f'半导体设备 {keyword} 概念股'
     data = iwencai_query(q)
     if not data:
         return []

@@ -57,7 +57,7 @@ def scan_earnings_preannouncement() -> dict[str, dict]:
     业绩预告净利润同比增长率 > 0%（取宽，由打分细分）。
     Returns: {code: {'name', 'pre_growth', 'trigger'}}
     """
-    q = '电子行业 业绩预告 归属母公司股东的净利润同比增长率大于0% 近30天'
+    q = '半导体设备 业绩预告 归属母公司股东的净利润同比增长率大于0% 近30天'
     data = iwencai_query(q)
     if not data:
         return {}
@@ -90,7 +90,7 @@ def scan_earnings_express() -> dict[str, dict]:
     业绩快报净利润同比 > 0%（已正式披露的最新季度数据）。
     Returns: {code: {'name', 'exp_growth', 'trigger'}}
     """
-    q = '电子行业 业绩快报 净利润同比增长率大于0% 近60天'
+    q = '半导体设备 业绩快报 净利润同比增长率大于0% 近60天'
     data = iwencai_query(q)
     if not data:
         return {}

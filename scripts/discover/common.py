@@ -3,7 +3,7 @@
 Discover 工作流公共模块
 
 功能：
-- 申万电子一级成分股池（801080.SL，~479 支）
+- 半导体设备成分股池（884229.TI 同花顺行业指数，~24 支）
 - 已覆盖公司池（从 _index.md 解析）
 - iFind SDK 薄封装（DataPool / BasicData / iwencai）
 - JSON 输出统一格式
@@ -30,7 +30,9 @@ ALT_DATA_README = RESEARCH_ROOT / '04_另类数据' / 'README.md'
 OUT_DIR = Path(__file__).parent / 'out'
 CACHE_DIR = Path(__file__).parent / 'cache'
 
-SW_ELECTRONICS_CODE = '801080.SL'  # 申万电子一级
+SEMI_EQUIP_INDEX_CODE = '884229.TI'  # 同花顺行业指数·半导体设备
+# 兼容旧名称（避免外部脚本引用断裂）
+SW_ELECTRONICS_CODE = SEMI_EQUIP_INDEX_CODE
 
 OUT_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
@@ -47,15 +49,15 @@ def _sdk():
     return iFinDPy
 
 
-def get_sw_electronics_pool(date: str = None, use_cache: bool = True) -> list[dict]:
+def get_semi_equipment_pool(date: str = None, use_cache: bool = True) -> list[dict]:
     """
-    获取申万电子一级成分股。默认使用缓存（7 天过期）。
-    Returns: [{'code': '688521.SH', 'name': '芯原股份'}, ...]
+    获取半导体设备指数（884229.TI）成分股。默认使用缓存（7 天过期）。
+    Returns: [{'code': '002371.SZ', 'name': '北方华创'}, ...]
     """
     if date is None:
         date = datetime.today().strftime('%Y-%m-%d')
 
-    cache_file = CACHE_DIR / 'sw_electronics_pool.json'
+    cache_file = CACHE_DIR / 'semi_equipment_pool.json'
     if use_cache and cache_file.exists():
         age = time.time() - cache_file.stat().st_mtime
         if age < 7 * 86400:
@@ -64,12 +66,12 @@ def get_sw_electronics_pool(date: str = None, use_cache: bool = True) -> list[di
     sdk = _sdk()
     raw = sdk.THS_DataPool(
         'index',
-        f'{date};{SW_ELECTRONICS_CODE}',
+        f'{date};{SEMI_EQUIP_INDEX_CODE}',
         'date:Y,thscode:Y,security_name:Y'
     )
     df = sdk.THS_Trans2DataFrame(raw)
     if df is None or len(df) == 0:
-        raise RuntimeError(f'申万电子成分为空（date={date}）')
+        raise RuntimeError(f'半导体设备成分为空（date={date}）')
 
     pool = [
         {'code': row['THSCODE'], 'name': row['SECURITY_NAME']}
@@ -77,6 +79,10 @@ def get_sw_electronics_pool(date: str = None, use_cache: bool = True) -> list[di
     ]
     cache_file.write_text(json.dumps(pool, ensure_ascii=False, indent=2), encoding='utf-8')
     return pool
+
+
+# 兼容旧调用方
+get_sw_electronics_pool = get_semi_equipment_pool
 
 
 def get_basic_data(codes: list[str], indicators: list[tuple[str, str]]) -> dict:
@@ -219,8 +225,8 @@ if __name__ == '__main__':
         print(f'  {c["name"]} ({c["code6"]})')
 
     print()
-    print('=== 申万电子池（前 5）===')
-    pool = get_sw_electronics_pool()
+    print('=== 半导体设备池（前 5）===')
+    pool = get_semi_equipment_pool()
     for s in pool[:5]:
         print(f'  {s["code"]} {s["name"]}')
     print(f'  ...共 {len(pool)} 支')
